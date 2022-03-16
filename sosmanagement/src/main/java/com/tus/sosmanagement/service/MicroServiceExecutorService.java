@@ -1,6 +1,7 @@
 package com.tus.sosmanagement.service;
 
 import com.tus.sosmanagement.VO.RelativeVO;
+import com.tus.sosmanagement.dto.SosLocationData;
 import com.tus.sosmanagement.dto.SosRegisterDTO;
 import com.tus.sosmanagement.entity.RelativeEntity;
 import com.tus.sosmanagement.entity.SosEntity;
@@ -32,4 +33,14 @@ public class MicroServiceExecutorService {
         }
         return CompletableFuture.completedFuture(relativeVO);
     }
+
+    @Async
+    public CompletableFuture<String> sendSosToCachingService(SosLocationData sosLocationData){
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println(Thread.currentThread().getName());
+        String userServiceURL = "http://localhost:8084/sos/location";
+        restTemplate.postForEntity(userServiceURL, sosLocationData, Object.class);
+        return CompletableFuture.completedFuture("Success");
+    }
+
 }

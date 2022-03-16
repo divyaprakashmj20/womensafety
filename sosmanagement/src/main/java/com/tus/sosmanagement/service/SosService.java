@@ -1,6 +1,8 @@
 package com.tus.sosmanagement.service;
 
 
+import com.tus.sosmanagement.dto.NearbyUsersData;
+import com.tus.sosmanagement.dto.SosLocationData;
 import com.tus.sosmanagement.dto.SosRegisterDTO;
 import com.tus.sosmanagement.dto.SosUpdateDTO;
 import com.tus.sosmanagement.entity.SosEntity;
@@ -31,6 +33,7 @@ public class SosService {
         SosEntity savedSosEntity = sosRepository.save(sosEntity);
         microServiceExecutorService.getRelatives(savedSosEntity);
         //notify relative users
+        microServiceExecutorService.sendSosToCachingService(new SosLocationData(savedSosEntity.getSosId(), savedSosEntity.getLatitude(), savedSosEntity.getLongitude()));
         return savedSosEntity;
     }
 
@@ -45,5 +48,9 @@ public class SosService {
         sosEntity.setLongitude(sosUpdateDTO.getLongitude());
         sosEntity.setSosLastUpdateTime(LocalDateTime.now());
         return sosRepository.save(sosEntity);
+    }
+
+    public void associateSosWithUser() {
+
     }
 }

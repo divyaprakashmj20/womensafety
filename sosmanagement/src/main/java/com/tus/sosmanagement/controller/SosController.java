@@ -1,18 +1,16 @@
 package com.tus.sosmanagement.controller;
 
+import com.tus.sosmanagement.dto.NearbyUsersData;
 import com.tus.sosmanagement.dto.SosRegisterDTO;
 import com.tus.sosmanagement.dto.SosUpdateDTO;
 import com.tus.sosmanagement.entity.SosEntity;
-import com.tus.sosmanagement.enums.SosState;
 import com.tus.sosmanagement.service.SosService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 public class SosController {
@@ -37,6 +35,12 @@ public class SosController {
     public ResponseEntity<?> updateSosDetails(@RequestBody SosUpdateDTO sosUpdateDTO){
         SosEntity sosEntity = sosService.updateSosDetails(sosUpdateDTO);
         return new ResponseEntity<>(sosEntity, HttpStatus.OK);
+    }
+
+    @PostMapping("/sos/nearby")
+    public String associateSosWithUser(@RequestBody List<NearbyUsersData> nearbyUsersData){
+        sosService.associateSosWithUser();
+        return "Success";
     }
 
 }

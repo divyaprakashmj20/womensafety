@@ -27,6 +27,7 @@
         <module>sosmanagement</module>
         <module>cachingservice</module>
         <module>authoritymanagement</module>
+        <module>notificationservice</module>
     </modules>
 
     <dependencies>
